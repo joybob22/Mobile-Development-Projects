@@ -5,15 +5,16 @@
  */
 let testScores = [65, 80, 88, 90, 47]
 
-
+let newTestScores = testScores.map { $0 + 1 }
+print(newTestScores)
 //:  Using the code below, use the `filter` function to create a new array of `String` values. The new array should only include Strings longer than four characters. Use `$0` as you iterate through the values of the array.  Print the resulting collection.
 let schoolSubjects = ["Math", "Computer Science", "Gym", "English", "Biology"]
-
-
+let newSchoolSubjects = schoolSubjects.filter { $0.count > 4 }
+print(newSchoolSubjects)
 //:  Using the code below, use the `reduce` function to subtract all of the values within the array from the starting value 100. Print the resulting value.
 let damageTaken = [25, 10, 15, 30, 20]
-
-
+let newDamage = damageTaken.reduce(100, -)
+print(newDamage)
 /*:
  _Copyright © 2021 Apple Inc._
 
