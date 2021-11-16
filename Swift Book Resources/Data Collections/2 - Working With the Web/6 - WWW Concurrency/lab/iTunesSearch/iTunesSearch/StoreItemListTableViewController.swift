@@ -8,7 +8,9 @@ class StoreItemListTableViewController: UITableViewController {
     
     // add item controller property
     
-    var items = [String]()
+    var storeItemController = StoreItemController()
+    
+    var items = [StoreItem]()
     
     let queryOptions = ["movie", "music", "software", "ebook"]
     
@@ -28,10 +30,29 @@ class StoreItemListTableViewController: UITableViewController {
         if !searchTerm.isEmpty {
             
             // set up query dictionary
+            let queryItems = [
+                "term": searchTerm,
+                "country": "us",
+                "media": mediaType,
+                "limit": "10",
+                "lang": "en_us"
+            ]
             
             // use the item controller to fetch items
             // if successful, use the main queue to set self.items and reload the table view
             // otherwise, print an error to the console
+            
+            storeItemController.fetchItems(matching: queryItems) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let storeItems):
+                        self.items = storeItems
+                        self.tableView.reloadData()
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            }
         }
     }
     
@@ -40,18 +61,30 @@ class StoreItemListTableViewController: UITableViewController {
         let item = items[indexPath.row]
         
         // set cell.titleLabel to the item's name
-        
+        cell.titleLabel.text = item.name
         // set cell.detailLabel to the item's artist
-        
+        cell.detailLabel.text = item.artist
         // set cell.itemImageView to the system image "photo"
-        
+        cell.itemImageView.image = UIImage(systemName: "photo")
         // initialize a network task to fetch the item's artwork
-        
+        storeItemController.fetchImage(from: item.artworkURL) { result in
+            
+            switch result {
+            case .success(let image):
+                print(image)
+                DispatchQueue.main.async {
+//                    cell.itemImageView.image = UIImage(systemName: "play.fill")
+                    cell.itemImageView.image = image
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+            
+        }
         // if successful, use the main queue capture the cell, to initialize a UIImage, and set the cell's image view's image to the
     }
     
     @IBAction func filterOptionUpdated(_ sender: UISegmentedControl) {
-        
         fetchMatchingItems()
     }
     
@@ -81,7 +114,6 @@ class StoreItemListTableViewController: UITableViewController {
 extension StoreItemListTableViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         fetchMatchingItems()
         searchBar.resignFirstResponder()
     }
