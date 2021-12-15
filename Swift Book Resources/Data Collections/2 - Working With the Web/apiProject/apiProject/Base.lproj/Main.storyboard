@@ -22,7 +22,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="yEx-9P-Nmb">
+                            <searchBar contentMode="redraw" placeholder="Search by Zipcode" translatesAutoresizingMaskIntoConstraints="NO" id="yEx-9P-Nmb">
                                 <rect key="frame" x="20" y="121" width="374" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -159,7 +159,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="qkM-RC-3NW">
+                            <searchBar contentMode="redraw" placeholder="Search by Year" translatesAutoresizingMaskIntoConstraints="NO" id="qkM-RC-3NW">
                                 <rect key="frame" x="20" y="131" width="374" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
